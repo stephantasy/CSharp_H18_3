@@ -17,6 +17,15 @@ namespace Tp3A
     {
 
 
+        // Affiche le contenu du tableau dans la limite du nombre passé en paramètre
+        private static void AfficheTableau(Pays[] pays, int nb)
+        {
+            for (int i = 0; i < nb; i++)
+            {
+                Console.WriteLine(" - " + pays[i].ToString());
+            }
+        }
+
         // Lit le fichier passé en paramètre, rempli le tableau avec les données lues et compte le nombre de personnes
         private static void LireFichier(string nomFichier, Pays[] tab, out int nb)
         {
@@ -28,8 +37,8 @@ namespace Tp3A
             while ((ligne = sr.ReadLine()) != null)
             {
                 char codeContinent = ligne.Substring(0, 1)[0];
-                string nom = ligne.Substring(1, 35);
-                string capitale = ligne.Substring(36, 25);
+                string nom = ligne.Substring(1, 35).Trim();
+                string capitale = ligne.Substring(36, 25).Trim();
                 int superficie = int.Parse(ligne.Substring(61, 10));
                 int population = int.Parse(ligne.Substring(71));
                 tab[nb++] = new Pays(codeContinent, nom, capitale, superficie, population);
@@ -61,7 +70,8 @@ namespace Tp3A
             LireFichier(fileName, pays, out int nbPays);
 
             //2. Afficher seulement 15 premiers pays lus (en utilisant, entre autres, la redéfinition de ToString) après la lecture;
-            AfficheTitre("");
+            AfficheTitre("2. Afficher seulement 15 premiers pays lus :");
+            AfficheTableau(pays, 15);
 
 
             //3. Faire la recherche séquentielle (avec Array.IndexOf …)  puis de :
@@ -70,11 +80,14 @@ namespace Tp3A
             //	- de changer la population de l’Allemagne : c’est 10 fois la population lue
             //
             //	On réaffiche 15 premiers pays du tableau après ces modifications;
-            AfficheTitre("");
+            AfficheTitre("3. Faire la recherche séquentielle et modifier le continent de la Russie :");            
+            ModifierContinent(pays, "Russie", '5');
 
+            AfficheTableau(pays, 15);
 
             //4. Afficher les pays dont le nom est identique au nom de la capitale (exemples Luxembourg, Panama, etc)
-            AfficheTitre("");
+            AfficheTitre("4. Afficher les pays dont le nom est identique au nom de la capitale :");
+
 
 
             //5. Déterminer puis afficher :
@@ -110,6 +123,26 @@ namespace Tp3A
             AfficheTitre("");
 
 
+        }
+
+        private static void ModifierContinent(Pays[] pays, string nomPays, char continent)
+        {
+            int pos = 0, nb = 0;
+            Pays aChercher = new Pays(' ', nomPays, "", 0, 0);
+            while((pos = Array.IndexOf(pays, aChercher, pos)) >= 0)
+            {
+                pays[pos].Continent = continent;
+                pos++;
+                nb++;
+            }
+            if (nb > 0)
+            {
+                Console.WriteLine(" - {0} modification(s) de la valeur 'continent' pour le pays '{1}'\n", nb, nomPays);
+            }
+            else
+            {
+                Console.WriteLine(" - Le pays {0} n'A pas été trouvé dans le talbeau\n", nomPays);
+            }
         }
     }
 }
