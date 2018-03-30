@@ -19,6 +19,8 @@ namespace Tp3A
 
         // Propriétés
         public char Continent { get => codeContinent; set => codeContinent = value; }
+        public string Capitale { get => capitale; set => capitale = value.ToUpper(); }
+        public int Population { get => population; set => population = value; }
 
         public enum EnumContinent {
             Afrique=1,

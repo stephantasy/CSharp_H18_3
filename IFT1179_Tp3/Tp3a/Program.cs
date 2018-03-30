@@ -17,6 +17,54 @@ namespace Tp3A
     {
 
 
+        // Modifie toutes les occurances "population" du pays demandé en le multipliant par "produit"
+        private static void ModifierPopulationMultiplier(Pays[] pays, string nomPays, int produit)
+        {
+            Pays aChercher = new Pays(' ', nomPays, "", 0, 0);
+            int pos;
+            if ((pos = Array.IndexOf(pays, aChercher)) >= 0)
+            {
+                pays[pos].Population *= produit;
+                Console.WriteLine(" - La population du pays '{0}' a été multiplée par {1}. Nouvelle valeur = {2}\n", nomPays, produit, pays[pos].Population);
+            }
+            else
+            {
+                Console.WriteLine(" - Le pays {0} n'a pas été trouvé dans le tableau\n", nomPays);
+            }
+        }
+
+        // Remplace toutes les occurances "capitale" du pays demandé par "newCapitale"
+        private static void ModifierCapitale(Pays[] pays, string nomPays, string newCapitale)
+        {
+            Pays aChercher = new Pays(' ', nomPays, "", 0, 0);
+            int pos;
+            if ((pos = Array.IndexOf(pays, aChercher)) >= 0)
+            {
+                pays[pos].Capitale = newCapitale;
+                Console.WriteLine(" - La capitale du pays '{0}' a été modifié avec la valeur '{1}'\n", nomPays, newCapitale);
+            }
+            else
+            {
+                Console.WriteLine(" - Le pays {0} n'a pas été trouvé dans le tableau\n", nomPays);
+            }
+        }
+
+        // Remplace toutes les occurance "continent" du pays demandé par "newContinent"
+        private static void ModifierContinent(Pays[] pays, string nomPays, char newContinent)
+        {
+            Pays aChercher = new Pays(' ', nomPays, "", 0, 0);
+            int pos;
+            if ((pos = Array.IndexOf(pays, aChercher)) >= 0)
+            {
+                pays[pos].Continent = newContinent;
+                Console.WriteLine(" - Le continent du pays '{0}' a été modifiée avec la valeur '{1}'\n", nomPays, newContinent);
+            }
+            else
+            {
+                Console.WriteLine(" - Le pays {0} n'a pas été trouvé dans le tableau\n", nomPays);
+            }
+        }
+
         // Affiche le contenu du tableau dans la limite du nombre passé en paramètre
         private static void AfficheTableau(Pays[] pays, int nb)
         {
@@ -68,10 +116,12 @@ namespace Tp3A
             //1. lire le fichier, remplir un tableau de pays, compter puis transmettre le nombre effectif de pays lus;
             AfficheTitre("1. lire le fichier, remplir un tableau de pays, compter puis transmettre le nombre effectif de pays lus :");
             LireFichier(fileName, pays, out int nbPays);
+            Console.WriteLine("");
 
             //2. Afficher seulement 15 premiers pays lus (en utilisant, entre autres, la redéfinition de ToString) après la lecture;
-            AfficheTitre("2. Afficher seulement 15 premiers pays lus :");
+            AfficheTitre("2. Afficher seulement les 15 premiers pays lus :");
             AfficheTableau(pays, 15);
+            Console.WriteLine("");
 
 
             //3. Faire la recherche séquentielle (avec Array.IndexOf …)  puis de :
@@ -80,13 +130,22 @@ namespace Tp3A
             //	- de changer la population de l’Allemagne : c’est 10 fois la population lue
             //
             //	On réaffiche 15 premiers pays du tableau après ces modifications;
-            AfficheTitre("3. Faire la recherche séquentielle et modifier le continent de la Russie :");            
+            AfficheTitre("3a. Faire la recherche séquentielle et modifier le continent de la Russie :");            
             ModifierContinent(pays, "Russie", '5');
 
+            AfficheTitre("3b. Faire la recherche séquentielle et modifier la capitale de la Chine :");
+            ModifierCapitale(pays, "Chine", "Pekin");
+
+            AfficheTitre("3c. Faire la recherche séquentielle et modifier la population de l’Allemagne :");
+            ModifierPopulationMultiplier(pays, "Allemagne", 10);
+
+            AfficheTitre("3d. Afficher seulement les 15 premiers pays lus :");
             AfficheTableau(pays, 15);
+            Console.WriteLine("");
 
             //4. Afficher les pays dont le nom est identique au nom de la capitale (exemples Luxembourg, Panama, etc)
             AfficheTitre("4. Afficher les pays dont le nom est identique au nom de la capitale :");
+            Console.WriteLine("");
 
 
 
@@ -94,12 +153,14 @@ namespace Tp3A
             //	- le pays d’Europe dont la densité est la plus petite.
             //	- le pays d’Océanie dont la densité est la plus petite. (densité : nombre d’habitants par km2)
             AfficheTitre("");
+            Console.WriteLine("");
 
 
             //6. Déterminer puis afficher le pays le plus peuplé
             //	- du continent Amérique ;
             //	- du continent Europe
             AfficheTitre("");
+            Console.WriteLine("");
 
 
             //7. Déterminer et d’afficher les informations :
@@ -108,41 +169,25 @@ namespace Tp3A
 
             //8. Trier (avec Array.Sort) selon les noms des pays et d’afficher les 10 premiers pays après le tri
             AfficheTitre("");
+            Console.WriteLine("");
 
 
             //9. Chercher (en utilisant la recherche avec Array.BinarySearch) puis afficher les pays suivants :
             //                - Chili, France, Chine,  Mexique
             AfficheTitre("");
+            Console.WriteLine("");
 
 
             //10a. Créer le fichier texte du nom Europe.txt qui contient seulement les pays d’Europe;
             AfficheTitre("");
+            Console.WriteLine("");
 
 
             //10b. Créer le fichier texte du nom Asie.txt qui contient seulement les pays d’Asie.
             AfficheTitre("");
+            Console.WriteLine("");
 
 
-        }
-
-        private static void ModifierContinent(Pays[] pays, string nomPays, char continent)
-        {
-            int pos = 0, nb = 0;
-            Pays aChercher = new Pays(' ', nomPays, "", 0, 0);
-            while((pos = Array.IndexOf(pays, aChercher, pos)) >= 0)
-            {
-                pays[pos].Continent = continent;
-                pos++;
-                nb++;
-            }
-            if (nb > 0)
-            {
-                Console.WriteLine(" - {0} modification(s) de la valeur 'continent' pour le pays '{1}'\n", nb, nomPays);
-            }
-            else
-            {
-                Console.WriteLine(" - Le pays {0} n'A pas été trouvé dans le talbeau\n", nomPays);
-            }
         }
     }
 }
