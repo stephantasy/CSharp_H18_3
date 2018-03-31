@@ -19,8 +19,10 @@ namespace Tp3A
 
         // Propriétés
         public char Continent { get => codeContinent; set => codeContinent = value; }
+        public string Nom { get => nom; set => nom = value.ToUpper(); }
         public string Capitale { get => capitale; set => capitale = value.ToUpper(); }
         public int Population { get => population; set => population = value; }
+        public int Superficie { get => superficie; set => superficie = value; }
 
         public enum EnumContinent {
             Afrique=1,
@@ -41,7 +43,7 @@ namespace Tp3A
         }
 
         // Renvoie le nom du continent en fonction de son code
-        private object GetContinentName(char code)
+        public static string GetContinentName(char code)
         {
             return Enum.GetName(typeof(EnumContinent), int.Parse(code.ToString()));
         }
@@ -49,7 +51,7 @@ namespace Tp3A
         // Redéfinition ToString
         public override string ToString()
         {
-            return string.Format("Continent : {0,-10} - Pays : {1,-12} - Capitale : {2,-10} - Superfie (km²) : {3,-8} - Population : {4}",
+            return string.Format("Continent : {0,-10} - Pays : {1,-32} - Capitale : {2,-19} - Superfie (km²) : {3,-8} - Population : {4}",
                 GetContinentName(codeContinent), nom, capitale, superficie, population);
         }
 
