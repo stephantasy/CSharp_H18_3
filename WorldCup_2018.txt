@@ -1,0 +1,33 @@
+Z1EGYPTE                             LE CAIRE                    995450       74718797
+A2URUGUAY                            MONTEVIDEO                  176220        3360105
+D5ITALIE                             ROME                        301230       57715625
+B3IRAN                               TEHERAN                    1648000       76000000
+B1MAROC                              RABAT                       710000       33008000 
+B5PORTUGAL                           LISBONNE                     92391       10066253
+A5RUSSIE                             MOSCOU                    17075400      143954573
+A3ARABIE SAOUDITE                    RIYAD                      1960582       23513330
+B5ESPAGNE                            MADRID                      504782       40037995
+C4AUSTRALIE                          CANBERRA                   7686850       19834248
+C5DANEMARK                           COPENHAGUE                   43094        5413392
+H3JAPON                              TOKYO                       377835       12761000
+H1SENEGAL                            DAKAR                       196190       10284929
+H5POLOGNE                            VARSOVIE                    312685       38633912
+C2PEROU                              LIMA                       1285220       27949639
+E5SUISSE                             BERNE                        41285        7261200
+D2ARGENTINE                          BUENOS AIRES               2766890       37812817
+D1NIGERIA                            ABUJA                       923768      133881703
+E2BRESIL                             BRASILIA                   8511965      174468575
+E2COSTA RICA                         SAN JOSE                     51100        3835000
+F5ALLEMAGNE                          BERLIN                      357027       82537000
+G5ROYAUME-UNI                        LONDRES                     244101       58789194
+F3COREE DU SUD                       SEOUL                        99274       48324000
+E5SUISSE                             BERNE                        41285        7261200
+D5CROATIE                            ZAGREB                       56542        4390751
+D5ISLANDE                            REYKJAVIC                   103125         288201
+E5SERBIE ET MONTENEGRO               BELGRADE                    102173       10660000
+F2MEXIQUE                            MEXICO                     1972550      103400165
+G5BELGIQUE                           BRUXELLES                    32545       10309725
+G2PANAMA                             PANAMA                       78200          28456
+G1TUNISIE                            TUNIS                       164150        9593402
+H2COLOMBIE                           BOGOTA                     1138910       41088227
+F5SUEDE                              STOCKHOLM                   944964        8875053
