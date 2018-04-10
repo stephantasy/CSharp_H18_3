@@ -12,7 +12,14 @@ namespace Tp3c
 {
     internal class Pays : IComparable
     {
-        public static int codeTri = 0;
+        // Code permettant de tester l'égalité
+        public static EnumCodeEquals codeEquals = EnumCodeEquals.Nom;
+        public enum EnumCodeEquals
+        {
+            Nom,
+            Population,
+            Superficie
+        };
 
         private char codeGroupe;
         private char codeContinent;
@@ -50,16 +57,23 @@ namespace Tp3c
         }
 
         // Renvoie le nom du continent en fonction de son code
-        public static string GetContinentName(char code)
+        public static string GetContinentNameByCode(char code)
         {
             return Enum.GetName(typeof(EnumContinent), int.Parse(code.ToString()));
+        }
+
+
+        // Renvoie le nom du continent
+        public string GetContinentName()
+        {
+            return Enum.GetName(typeof(EnumContinent), int.Parse(codeContinent.ToString()));
         }
 
         // Redéfinition ToString
         public override string ToString()
         {
-            return string.Format("Continent : {0,-10} - Pays : {1,-32} - Capitale : {2,-19} - Superfie (km²) : {3,-8} - Population : {4}",
-                GetContinentName(codeContinent), nom, capitale, superficie, population);
+            return string.Format("Groupe : {0,2} - Continent : {1,-10} - Pays : {2,-24} - Capitale : {3,-14} - Superfie (km²) : {4,-8} - Population : {5}",
+                codeGroupe, GetContinentName(), nom, capitale, superficie, population);
         }
 
         // Redéfinition Equals
@@ -69,7 +83,21 @@ namespace Tp3c
             if (!(obj is Pays)) return false;
 
             var autre = (Pays)obj;
-            return nom.ToUpper().Trim().Equals(autre.nom.ToUpper().Trim());
+
+            switch (codeEquals)
+            {
+                // Égalité de population
+                case EnumCodeEquals.Population:
+                    return population.Equals(autre.population);
+
+                // Égalité de superficie
+                case EnumCodeEquals.Superficie:
+                    return superficie.Equals(autre.superficie);
+
+                //Égalité de nom
+                default:
+                    return nom.ToUpper().Trim().Equals(autre.nom.ToUpper().Trim());
+            }
         }
         public override int GetHashCode()
         {
@@ -82,6 +110,7 @@ namespace Tp3c
         {
             Pays autre = (Pays)obj;
             return nom.ToUpper().Trim().CompareTo(autre.nom.ToUpper().Trim());
+            
         }
     }
 }
