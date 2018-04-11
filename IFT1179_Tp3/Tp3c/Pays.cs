@@ -18,7 +18,8 @@ namespace Tp3c
         {
             Nom,
             Population,
-            Superficie
+            Superficie,
+            Groupe
         };
 
         private char codeGroupe;
@@ -94,6 +95,10 @@ namespace Tp3c
                 case EnumCodeEquals.Superficie:
                     return superficie.Equals(autre.superficie);
 
+                // Égalité de groupe
+                case EnumCodeEquals.Groupe:
+                    return codeGroupe.Equals(autre.codeGroupe);
+
                 //Égalité de nom
                 default:
                     return nom.ToUpper().Trim().Equals(autre.nom.ToUpper().Trim());
@@ -109,8 +114,7 @@ namespace Tp3c
         public int CompareTo(object obj)
         {
             Pays autre = (Pays)obj;
-            return nom.ToUpper().Trim().CompareTo(autre.nom.ToUpper().Trim());
-            
+            return nom.ToUpper().Trim().CompareTo(autre.nom.ToUpper().Trim());                                   
         }
     }
 }

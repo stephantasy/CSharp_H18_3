@@ -2,16 +2,48 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+/* ************************
+ *      IFT1179 - TP3
+ * Stéphane Barthélemy
+ *        20084771
+ ************************ */
 
 namespace Tp3c
 {
     class Program
     {
-        // 
+        // Affiche le nom des pays qui vont affronter le pays passé en paramètre
         private static void AfficherAdversairePays(List<Pays> listePays, string pays)
         {
+            Pays achercher;
+            int pos;
+            char groupe;
+
+            // On récupère le groupe du pays concerné
+            achercher = new Pays(' ', ' ', pays, "", 0, 0);
+            pos = listePays.BinarySearch(achercher);
+            if(pos < 0)
+            {
+                Console.WriteLine("Le pays '{0}' n'est pas dans la liste!", pays);
+                return;
+            }
+            groupe = listePays.ElementAt(pos).Groupe;
+
+            // On liste les pays qui vont l'affronter
+            Console.WriteLine("Le pays '{0}' va affronter les pays suivants : \n", pays);
+            Pays.codeEquals = Pays.EnumCodeEquals.Groupe;
+            achercher = new Pays(groupe, ' ', "", "", 0, 0);
+            pos = 0;
+            while ( (pos = listePays.IndexOf(achercher, pos)) >= 0)
+            {
+                // On ignore le pays traité
+                if (listePays.ElementAt(pos).Nom.ToUpper() != pays.ToUpper())
+                {
+                    Console.WriteLine("\t- {0}", listePays.ElementAt(pos).Nom);
+                }
+                pos++;
+            }
         }
 
 
@@ -38,7 +70,7 @@ namespace Tp3c
         private static void TrierListeParPays(List<Pays> listePays)
         {
             listePays.Sort(); // Par le nom des pays par défaut
-            Console.WriteLine(" - La liste des pays est triée par le nom des pays");
+            Console.WriteLine(" - La liste des pays a été triée par le nom des pays");
         }
 
 
@@ -123,7 +155,7 @@ namespace Tp3c
         private static void AjouterPays(List<Pays> listePays, Pays pays)
         {
             listePays.Add(pays);
-            Console.WriteLine("Le pays suivant à été ajouté : {0}", pays.Nom);
+            Console.WriteLine(" - Le pays suivant à été ajouté :\n\t{0}", pays.ToString());
         }
 
 
@@ -136,7 +168,7 @@ namespace Tp3c
                 Pays aChercher = new Pays(' ', ' ', pays, "", 0, 0);
                 int pos = listePays.IndexOf(aChercher);
                 // On supprime toute les instances du pays
-                while( (pos = listePays.IndexOf(aChercher)) > 0)
+                while( (pos = listePays.IndexOf(aChercher)) >= 0)
                 {
                     listePays.RemoveAt(pos);
                     msg += pays + " ";
@@ -232,13 +264,12 @@ namespace Tp3c
             const string fileName = "WorldCup_2018.txt";
             List<Pays> listePays = new List<Pays>();
 
+
             // 1. Lire le fichier des données WorldCup_2018.txt et créer une  liste;
             AfficheTitre("1. Lire le fichier des données WorldCup_2018.txt et créer une liste :");
             listePays = LireFichier(fileName);
             Console.WriteLine("");
-
-
-            AfficherListe(listePays, listePays.Count);
+            
 
             // 2. Afficher les 6 premiers et les 4 derniers pays de la liste;
             AfficheTitre("2. Afficher les 6 premiers et les 4 derniers pays de la liste :");
@@ -311,11 +342,143 @@ namespace Tp3c
             Console.WriteLine("");
 
 
-            // 10. Déterminer et d’afficher les pays que le Bresil les affrontera au 1er tour (ceux du même groupe que le Brésil)
-            AfficheTitre("10. Déterminer et d’afficher les pays que le Bresil les affrontera au 1er tour :");
+            // 10. Déterminer et afficher les pays que le Bresil les affrontera au 1er tour (ceux du même groupe que le Brésil)
+            AfficheTitre("10. Déterminer et afficher les pays que le Bresil affrontera au 1er tour :");
             AfficherAdversairePays(listePays, "Bresil");
             Console.WriteLine("");
 
         }
     }
 }
+
+/*
+ 
+1. Lire le fichier des données WorldCup_2018.txt et créer une liste :
+---------------------------------------------------------------------
+
+ - Fin de la lecture du fichier WorldCup_2018.txt. Il contient 33 pays.
+
+
+
+2. Afficher les 6 premiers et les 4 derniers pays de la liste :
+---------------------------------------------------------------
+
+Voici les 6 premiers et les 4 derniers pays dans l'ordre initiale :
+
+  0 - Groupe :  Z - Continent : Afrique    - Pays : EGYPTE                   - Capitale : LE CAIRE       - Superfie (km²) : 995450   - Population : 74718797
+  1 - Groupe :  A - Continent : Amérique   - Pays : URUGUAY                  - Capitale : MONTEVIDEO     - Superfie (km²) : 176220   - Population : 3360105
+  2 - Groupe :  D - Continent : Europe     - Pays : ITALIE                   - Capitale : ROME           - Superfie (km²) : 301230   - Population : 57715625
+  3 - Groupe :  B - Continent : Asie       - Pays : IRAN                     - Capitale : TEHERAN        - Superfie (km²) : 1648000  - Population : 76000000
+  4 - Groupe :  B - Continent : Afrique    - Pays : MAROC                    - Capitale : RABAT          - Superfie (km²) : 710000   - Population : 33008000
+  5 - Groupe :  B - Continent : Europe     - Pays : PORTUGAL                 - Capitale : LISBONNE       - Superfie (km²) : 92391    - Population : 10066253
+      ...
+ 29 - Groupe :  G - Continent : Amérique   - Pays : PANAMA                   - Capitale : PANAMA         - Superfie (km²) : 78200    - Population : 28456
+ 30 - Groupe :  G - Continent : Afrique    - Pays : TUNISIE                  - Capitale : TUNIS          - Superfie (km²) : 164150   - Population : 9593402
+ 31 - Groupe :  H - Continent : Amérique   - Pays : COLOMBIE                 - Capitale : BOGOTA         - Superfie (km²) : 1138910  - Population : 41088227
+ 32 - Groupe :  F - Continent : Europe     - Pays : SUEDE                    - Capitale : STOCKHOLM      - Superfie (km²) : 944964   - Population : 8875053
+
+
+
+3a. Modifier le groupe du premier  pays 'A' au lieu de 'Z' :
+------------------------------------------------------------
+
+ - Le groupe du pays EGYPTE a été modifié, sa nouvelle valeur est : A
+
+
+
+3b. Modifier la superficie du dernier pays : 449964 km2 au lieu de 944964 km2 :
+-------------------------------------------------------------------------------
+
+ - La superficie du pays SUEDE a été modifiée, sa nouvelle valeur est : 449964
+
+
+
+4. Supprimer les deux pays qui ne sont pas qualifiés pour cette coupe :
+-----------------------------------------------------------------------
+
+ - Les pays suivants ont été supprimés : ITALIE SUISSE SUISSE
+
+
+
+5. Ajouter la France à la liste :
+---------------------------------
+
+ - Le pays suivant à été ajouté :
+        Groupe :  C - Continent : Europe     - Pays : FRANCE                   - Capitale : PARIS          - Superfie (km²) : 543964   - Population : 61387038
+
+
+
+6a. Déterminer et afficher le continent ayant plus de pays participants :
+-------------------------------------------------------------------------
+
+ - Le continent ayant le plus grand nombre de pays participant est l'Europe
+
+
+
+6b. Déterminer et afficher le continent ayant le moins de pays participants :
+-----------------------------------------------------------------------------
+
+ - Le continent ayant le moins de pays participant est l'Océanie
+
+
+
+6c. Déterminer et afficher le pays le moins peuplé en population :
+------------------------------------------------------------------
+
+ - Le pays le moins peuplé est : PANAMA
+
+
+
+6d. Déterminer et afficher le pays le plus petit en superficie :
+----------------------------------------------------------------
+
+ - Le pays ayant la plus petite superficie est : BELGIQUE
+
+
+
+7. Trier la liste selon les noms des pays en utilisant la méthode Sort :
+------------------------------------------------------------------------
+
+ - La liste des pays a été triée par le nom des pays
+
+
+
+8. Afficher les 6 premiers et les 4 derniers pays de la liste après le tri :
+----------------------------------------------------------------------------
+
+Voici les 6 premiers et les 4 derniers pays après le tri :
+
+  0 - Groupe :  F - Continent : Europe     - Pays : ALLEMAGNE                - Capitale : BERLIN         - Superfie (km²) : 357027   - Population : 82537000
+  1 - Groupe :  A - Continent : Asie       - Pays : ARABIE SAOUDITE          - Capitale : RIYAD          - Superfie (km²) : 1960582  - Population : 23513330
+  2 - Groupe :  D - Continent : Amérique   - Pays : ARGENTINE                - Capitale : BUENOS AIRES   - Superfie (km²) : 2766890  - Population : 37812817
+  3 - Groupe :  C - Continent : Océanie    - Pays : AUSTRALIE                - Capitale : CANBERRA       - Superfie (km²) : 7686850  - Population : 19834248
+  4 - Groupe :  G - Continent : Europe     - Pays : BELGIQUE                 - Capitale : BRUXELLES      - Superfie (km²) : 32545    - Population : 10309725
+  5 - Groupe :  E - Continent : Amérique   - Pays : BRESIL                   - Capitale : BRASILIA       - Superfie (km²) : 8511965  - Population : 174468575
+      ...
+ 27 - Groupe :  E - Continent : Europe     - Pays : SERBIE ET MONTENEGRO     - Capitale : BELGRADE       - Superfie (km²) : 102173   - Population : 10660000
+ 28 - Groupe :  F - Continent : Europe     - Pays : SUEDE                    - Capitale : STOCKHOLM      - Superfie (km²) : 449964   - Population : 8875053
+ 29 - Groupe :  G - Continent : Afrique    - Pays : TUNISIE                  - Capitale : TUNIS          - Superfie (km²) : 164150   - Population : 9593402
+ 30 - Groupe :  A - Continent : Amérique   - Pays : URUGUAY                  - Capitale : MONTEVIDEO     - Superfie (km²) : 176220   - Population : 3360105
+
+
+
+9. Faire la recherche des pays suivants dans la liste : Japon,  Canada et Italie :
+----------------------------------------------------------------------------------
+
+ - Groupe :  H - Continent : Asie       - Pays : JAPON                    - Capitale : TOKYO          - Superfie (km²) : 377835   - Population : 12761000
+ - Le pays 'CANADA' n'est pas dans la liste.
+ - Le pays 'ITALIE' n'est pas dans la liste.
+
+
+
+10. Déterminer et afficher les pays que le Bresil affrontera au 1er tour :
+--------------------------------------------------------------------------
+
+Le pays 'Bresil' va affronter les pays suivants :
+
+        - COSTA RICA
+        - SERBIE ET MONTENEGRO
+
+
+
+ */

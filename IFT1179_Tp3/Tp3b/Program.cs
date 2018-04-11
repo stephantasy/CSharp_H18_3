@@ -129,6 +129,4 @@ La somme des chiffres de 1 + 1/2 + ... + 1/n-1 + 1/n est 7,48447086
 
 La somme des chiffres de 1 + 1/2 + ... + 1/n-1 + 1/n est 7,48447086
 
-Press any key to continue . . .
-
  */
